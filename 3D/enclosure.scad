@@ -33,7 +33,8 @@ yb_sensor = 11.20;                             // distance sensor to bottom
 yt_sensor = 10.50;                             // distance sensor to top
 y_sensor  = y_pcb - yb_sensor - yt_sensor;
 
-x_stemma = 8;
+x_stemma = 8.0;
+y_stemma = 4.5;
 z_stemma = 3.2;
 
 x_grove = 10;
@@ -41,6 +42,8 @@ z_grove = 0;      // TBD
 
 x_case = x_pcb + 2*gap + 2*w4;
 y_case = y_pcb + 2*gap + 2*w4;
+
+d_screw = 4.5;    // enclosure screw
 
 // --- supports   --------------------------------------------------------------
 
@@ -82,10 +85,12 @@ module bottom() {
       rect_tube(size=[x_case,y_case],wall=w2,h=z2_bot,anchor=BOTTOM+CENTER);
     }
     // cutouts Stemma
-    move([0,-y_case/2+w4/2,b])
+    move([0,-y_case/2+w4/2,z1_bot])
                  cuboid([x_stemma,2*w4,z2_bot-b+fuzz],anchor=BOTTOM+CENTER);
-    move([0,+y_case/2-w4/2,b])
+    move([0,+y_case/2-w4/2,z1_bot])
                  cuboid([x_stemma,2*w4,z2_bot-b+fuzz],anchor=BOTTOM+CENTER);
+    // cutout screw
+    move([0,y_pcb/2-y_support/2,-fuzz]) cyl(d=d_screw,h=b+2*fuzz,anchor=BOTTOM+CENTER);
   }
 }
 
@@ -98,15 +103,20 @@ module top() {
       cuboid([x_case,y_case,b],anchor=BOTTOM+CENTER);
       // walls around sensor
       rect_tube(size=[x_case-2*w2,y_case-2*w2],
-                wall=w2,h=z2_top,anchor=BOTTOM+CENTER);
-      rect_tube(size=[x_case-4*w2,y_case-4*w2],
-                wall=w2,h=z2_top+z_pcb,anchor=BOTTOM+CENTER);
+                wall=w4,h=z2_top,anchor=BOTTOM+CENTER);
+      // walls around Stemma
+      move([0,-y_case/2+y_stemma/2+w4+w2-fuzz,0])
+        rect_tube(size=[x_stemma+2*w2,y_stemma+2*w2],
+                  wall=w2,h=z2_top,anchor=BOTTOM+CENTER);
+      move([0,+y_case/2-y_stemma/2-w4-w2+fuzz,0])
+        rect_tube(size=[x_stemma+2*w2,y_stemma+2*w2],
+                  wall=w2,h=z2_top,anchor=BOTTOM+CENTER);
     }
     // cutouts Stemma
-    move([0,-y_case/2+w4/2,b])
-          cuboid([x_stemma,3*w4,z2_top+z_pcb-b+fuzz],anchor=BOTTOM+CENTER);
-    move([0,+y_case/2-w4/2,b])
-          cuboid([x_stemma,3*w4,z2_top+z_pcb-b+fuzz],anchor=BOTTOM+CENTER);
+    move([0,-y_case/2+1.5*w2+y_stemma/2-fuzz,-fuzz])
+          cuboid([x_stemma,3*w2+y_stemma,z2_top+z_pcb-b+2*fuzz],anchor=BOTTOM+CENTER);
+    move([0,+y_case/2-1.5*w2-y_stemma/2+fuzz,-fuzz])
+          cuboid([x_stemma,3*w2+y_stemma,z2_top+z_pcb-b+2*fuzz],anchor=BOTTOM+CENTER);
     // cutouts ventilation
     move([0,0,-fuzz]) cuboid([x_pcb/2,w4,b+2*fuzz],anchor=BOTTOM+CENTER);
     move([0,3*w4,-fuzz]) cuboid([x_pcb/2,w4,b+2*fuzz],anchor=BOTTOM+CENTER);
