@@ -22,3 +22,7 @@ TODO
 
 boot_out.txt
 lib
+
+*.gcode
+*.stl
+*.3mf
