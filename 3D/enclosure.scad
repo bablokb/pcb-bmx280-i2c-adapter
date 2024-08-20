@@ -10,8 +10,6 @@
 include <dimensions.scad>
 include <BOSL2/std.scad>
 
-TEST = true;
-
 // dimensions   ----------------------------------------------------------------
 
 x_pcb   = 20.0;
@@ -34,7 +32,7 @@ yt_sensor = 10.50;                             // distance sensor to top
 y_sensor  = y_pcb - yb_sensor - yt_sensor;
 
 x_stemma = 8.0;
-y_stemma = 4.5;
+y_stemma = 5.5;
 z_stemma = 3.2;
 
 x_grove = 10;
