@@ -12,6 +12,10 @@ The breakout suports two Stemma/Qt on top and bottom. On the top
 side, you can also add two horizontal Grove-connectors. For the
 bottom side, only vertical Grove-connectors will work.
 
+The directory `3D` contains design-files for an enclosure in OpenSCAD format.
+You also need the [BOSL2-Library](https://github.com/BelfrySCAD/BOSL2).
+
+
 Schematic
 ---------
 
